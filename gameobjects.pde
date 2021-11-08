@@ -1,8 +1,11 @@
 class gameobject{
-  
+ 
     PVector location;
     PVector velocity;
     int hp;
+    int roomx;
+    int roomy;
+    int size;
     
   gameobject(){
     location = new PVector (width/2, height/2);

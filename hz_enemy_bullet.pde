@@ -1,26 +1,28 @@
-class bullet extends gameobject {
+class enemybullet extends gameobject {
 
   int timer;
+  color bulletcolour;
 
 
 
-  bullet(PVector aimvector, int colour, int s) {
-    location=myhero.location.copy();
-    c= colour;
+  enemybullet(PVector aimvector, float x, float y, int colour, int s) {    
+    location.x=x;
+    location.y=y;
+    bulletcolour= colour;
     size=s;
     velocity=aimvector.copy();
-    timer=40;
+    velocity.setMag(2);
+    timer=100;
     hp=1;
     s=10;
-    velocity.add(myhero.velocity);
-    roomx=myhero.roomx;
-    roomy=myhero.roomy;
+    roomx=3;
+    roomy=1;
   }
 
   void show() {
     stroke(white);
-    fill(c);
-    stroke(c);
+    fill(bulletcolour);
+    stroke(bulletcolour);
     ellipse(location.x, location.y, size, size);
   }
 
@@ -29,11 +31,10 @@ class bullet extends gameobject {
     timer--;
     if (timer==0) {
       hp=0;
-      explode(15);
     }
     if (location.x<width*0.1|| location.x> width*0.9||location.y<height*0.1|| location.y>height*0.9) {
       hp=0;
-      explode(15);
+      explode(10);
     }
   }
 }

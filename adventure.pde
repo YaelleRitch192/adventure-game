@@ -1,7 +1,15 @@
+
+//shooter doesnt work
+//make pause screen come on when u walk thru the shop door
+
+
 boolean mouseReleased;
 boolean hadPressed;
 boolean wkey, skey, akey, dkey, space, onekey, twokey, threekey;
 PFont   introfont;
+int xp;
+int extradamage;
+int extralight;
 
 //color pallette
 color blue   = #191A5D;
@@ -11,6 +19,7 @@ color darkgreen = #255506;
 color yellow = #BF9F41;
 color black  = #000000;
 color white  = #FFFFFF;
+color red = #FF0303;
 
 
 int mode;
@@ -21,19 +30,60 @@ final int gameover =4;
 
 //gifs
 gif forest;
+gif manup;
+gif mandown;
+gif manleft;
+gif manright;
+gif zombieup;
+gif zombiedown;
+gif zombieleft;
+gif zombieright;
+//pics
+PImage healthpotion;
+PImage droppedgun;
+PImage sprite;
+PImage shop;
 //buttons
 Button startbutton;
+Button hpbutton;
+Button speedbutton;
+Button damagebutton;
+Button upgradeshopbutton;
+Button extralightbutton;
 //map
 PImage map;
 color northroom, eastroom, southroom, westroom;
 //darkness
 float size;
 ArrayList<darknesscell> darkness;
-
 //
 ArrayList<gameobject> myobjects;
 
 hero myhero;
+//weapons
+final int machinegun_threshold = 10;
+final int macheinegun_bulletspeed = 5;
+final int shotgun_threshold = 50;
+final int shotgun_bulletspeed = 6;
+final int sniper_threshold = 60;
+final int snipern_bulletspeed = 8;
+final int bulletsize=10;
+//enemy
+final int follower_hp= 100;
+final int follower_size=50;
+final int lurker_hp=100;
+final int lurker_size=50;
+final int shooter_hp=100;
+final int shoooter_size=50;
+final int enemybullet_size=10;
+final int grower_hp=100;
+final int grower_size=50;
+//dropped items
+final int ammo=0;
+final int health=1;
+final int gun = 2;
+
+
 
 void setup() {
   size(800, 600);  
@@ -41,12 +91,33 @@ void setup() {
   rectMode(CENTER);
   textAlign(CENTER, CENTER);
   mode=intro;
+  xp=0;
+  extradamage=0;
+  extralight=0;
   //fonts
   introfont=createFont("Night Zone.ttf", 100);
+  //images
+  healthpotion= loadImage("healthpotion.jpg"); 
+  droppedgun=loadImage("gun.png");
+  sprite=loadImage("sprite.png");
+  shop=loadImage("shop.png");
   //gifs
-  forest=new gif(28, "frame_", "_delay-0.03s.gif");
+  forest=new gif(28, 10, "frame_", "_delay-0.03s.gif");
+  manup = new gif(4,10, "man/up/sprite_", ".png");
+  mandown = new gif(4,10, "man/down/sprite_", ".png");
+  manleft= new gif(4,10, "man/left/sprite_", ".png");
+  manright = new gif(4,10, "man/right/sprite_", ".png");
+  zombieup = new gif(4,10, "zombie/up/Zombie_0", ".png");
+  zombiedown = new gif(4,10, "zombie/down/Zombie_0", ".png");
+  zombieleft= new gif(4,10, "zombie/left/Zombie_0", ".png");
+  zombieright = new gif(4,10, "zombie/right/Zombie_0", ".png");
   //buttons
   startbutton  = new Button("Start", width/2, 400, 200, 150, green, darkgreen);
+  hpbutton = new   Button("*", 200, 250, 30, 30, blue, yellow);
+  speedbutton = new   Button("*", 200, 350, 30, 30, blue, yellow);
+  damagebutton = new   Button("*", 200, 450, 30, 30, blue, yellow);
+  upgradeshopbutton =   new Button("shop", width/4, height/2, 50, 30, blue, yellow);
+  extralightbutton = new Button("*",200,550, 30,30,blue,yellow);
   //images
   map=loadImage("map.png");
   //
@@ -68,8 +139,31 @@ void setup() {
     darkness.add(new darknesscell(x, y, size));
     i++;
   }   
-  //enemy
-  myobjects.add(new enemy());
+  x=0;
+  y=0;
+  while (y< map.height) {
+    color roomcolour = map.get(x, y);
+    if (roomcolour == green) {
+      myobjects.add(new enemy(x, y));
+    }
+    if (roomcolour==blue) {
+      myobjects.add(new follower(x, y));
+    }
+        if (roomcolour==red) {
+      myobjects.add(new shooter(x, y));
+    }
+        if (roomcolour==yellow) {
+      myobjects.add(new grower(x, y));
+    }
+    if (roomcolour==black) {
+myobjects.add(new upgradeshop(x,y));
+ }
+    x++;
+    if (x==map.width) {
+      x=0;
+      y++;
+    }
+  }
 }
 
 void draw() {

@@ -4,7 +4,9 @@ void game() {
   drawgameobjects();
   drawlightlayer();
   drawminimap();
-  guns();
+  //guns();
+  textSize(30);
+ // upgradeshop();
 }
 
 
@@ -75,10 +77,14 @@ void drawminimap() {
   while (y<map.height) {
     color c = map.get(x, y); 
     fill(c);
+        square(x*10+50, y*10+50, size);
     if ( myhero.roomx*10+50 == x*10+50 && myhero.roomy*10+50 == y*10+50) {
-      fill(yellow);
+      imageMode(CORNER);
+      image(sprite,x*10+50, y*10+50);
+      sprite.resize(10,10);
+      
     }
-    square(x*10+50, y*10+50, size);
+    //    square(x*10+50, y*10+50, size);
     x=x+1;
     if (x>= map.width) {
       x=0;
@@ -118,4 +124,11 @@ void guns() {
   rect(300, 575, 50, 50);
   fill(blue);
   text("shotgun", 300, 575);
+}
+
+void upgradeshop(){
+  upgradeshopbutton.show();
+    if (upgradeshopbutton.clicked) {
+mode=pause;
+  }
 }

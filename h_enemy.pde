@@ -1,39 +1,61 @@
-class enemy extends gameobject{
-  
-    
-  enemy(){
+class enemy extends gameobject {
+
+
+  enemy() {
     roomx=1;
     roomy=1;
-    location=new PVector(width/2, height/2);
-    velocity= new PVector(0,0);
+    location=new PVector(width/2-100, height/2-100);
+    velocity= new PVector(0, 0);
     hp=100;
-    size=30;   
+    size=30;
   }
-  
-  void show(){
+
+  enemy(int x, int y) {
+    roomx=x;
+    roomy=y;
+    location=new PVector(width/2-100, height/2-100);
+    velocity= new PVector(0, 0);
+    hp=100;
+    size=30;
+  }
+
+  enemy(int hp_, int s, int x, int y) {
+    location=new PVector(width/2 + random(-100, 100), height/2 + random(-100, 100));
+    velocity= new PVector(0, 0);
+    roomx=x;
+    roomy=y;
+    size=s;
+    hp=hp_;
+  }
+  void show() {
+    textSize(10);
     fill(brown);
     ellipse(location.x, location.y, size, size);
-    fill(255);
-    text(hp,location.x,location.y);
-  
+    fill(white);
+    text(hp, location.x, location.y);
   }
-  
-  void act(){
+
+  void act() {
     super.act();
     int i =0;
-    while(i<myobjects.size()){
+    while (i<myobjects.size()) {
       gameobject obj=myobjects.get(i);
-      if(obj instanceof bullet){
-       float d = dist(obj.location.x,obj.location.y,location.x,location.y);
-       if (d<= size/2+obj.size/2){
-         hp=hp-int(obj.velocity.mag());
-         obj.hp=0;
-       }
+      if (obj instanceof bullet && iscollidingwith(obj)) {
+        hp=hp-(int(obj.velocity.mag())+extradamage);
+        obj.hp=0;
+        if (hp<=0) { 
+          myobjects.add (new message(location.x, location.y, roomx,roomy));
+          xp=xp+10;
+          explode(30);
+          int r=int(random(0, 3));
+          if (r==0) 
+            myobjects.add(new droppedgun(location.x, location.y, roomx, roomy));
+          if (r==1) 
+            myobjects.add(new droppedhealth(location.x, location.y, roomx, roomy));
+        }
       }
-      
+
       i++;
     }
-    
   }
-  
 }

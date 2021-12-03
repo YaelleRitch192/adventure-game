@@ -4,10 +4,13 @@ class particles extends gameobject {
   int i;
 
 
-  particles(float x, float y) {
+  particles(float x, float y, int rx, int ry) {
+    //////////////////////////////////////need a roomx and roomy
     hp=1;
     size=5;
     t=255;
+    roomx=rx;
+    roomy=ry;
     location=new PVector(x, y);
     velocity=new PVector (int(random(1, 5)), int(random(1, 5)));
     velocity.rotate(radians(random(0, 360)));

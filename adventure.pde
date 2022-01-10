@@ -60,6 +60,7 @@ Button damagebutton;
 Button upgradeshopbutton;
 Button extralightbutton;
 Button instructionsbutton;
+Button instructionsexit;
 //map
 PImage map;
 color northroom, eastroom, southroom, westroom;
@@ -132,6 +133,7 @@ void setup() {
   slimezero = new gif(5, 10, "Slime/Slime_", ".png");
   //buttons
   instructionsbutton  = new Button("instructions", 500, 350, 300, 150, green, darkgreen);
+  instructionsexit = new Button("X", 670,50,30,40,darkgreen,red);
   startbutton  = new Button("Start", 150, 350, 200, 150, green, darkgreen);
   restartbutton  = new Button("Restart", width/2, 400, 200, 150, green, darkgreen);
   hpbutton = new   Button("*", 200, 250, 30, 30, blue, yellow);

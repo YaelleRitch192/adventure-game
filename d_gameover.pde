@@ -1,8 +1,8 @@
 void gameover(){
-  background(darkgreen); 
+  background(darkgreen);
+    fill(green);
   if (myhero.hp==0){
   background(darkgreen);
-  fill(green);
   text("you lost", width/2, 200);
   } else {
    text("you won", width/2, 200);  

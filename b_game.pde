@@ -4,11 +4,31 @@ void game() {
   drawgameobjects();
   drawlightlayer();
   drawminimap();
-  //guns();
+  guns();
   textSize(30);
- // upgradeshop();
+  
+if(map.get(myhero.roomx,myhero.roomy)==black){
+if(myhero.location.x>330 && myhero.location.x<470 && myhero.location.y>height/2-80 && myhero.location.y<height/2+80){
+  mode=pause;
+  myhero.location.y=height/2+105;
+  myhero.location.x=width/2+30;
 }
-
+if(myhero.location.x>320 && myhero.location.x< 330 && myhero.location.y>=height/2-80 && myhero.location.y<=height/2+80){
+  myhero.location.x=width/2-81;
+}
+if(myhero.location.x<480 && myhero.location.x>470 && myhero.location.y>height/2-80 && myhero.location.y<height/2+80){
+  myhero.location.x=width/2+81;
+}
+if(myhero.location.x<480 && myhero.location.x>320 && myhero.location.y>height/2-95 && myhero.location.y<height/2-80){
+  myhero.location.y=height/2-95;
+}
+if(map.get(myhero.roomx,myhero.roomy)==red){
+if(myhero.location.x>width/2-100 && myhero.location.x<width/2+100 && myhero.location.y>height/2-120 && myhero.location.y<height/2+120){
+  mode=gameover;
+}
+}
+}
+}
 
 
 
@@ -84,7 +104,6 @@ void drawminimap() {
       sprite.resize(10,10);
       
     }
-    //    square(x*10+50, y*10+50, size);
     x=x+1;
     if (x>= map.width) {
       x=0;
@@ -97,38 +116,31 @@ void guns() {
   rectMode(CENTER);
   textSize(10);
   //machine
-  if (onekey==true) {
+  if (shotgun==true) {
     fill(green);
   } else {
     fill(yellow);
   }
   rect(100, 575, 50, 50);
   fill(blue);
-  text("machine", 100, 575);
+  text("shotgun", 100, 575);
   //sniper
-  if (twokey==true) {
+  if (machinegun==true) {
     fill(green);
   } else {
     fill(yellow);
   }
   rect(200, 575, 50, 50);
   fill(blue);
-  text("sniper", 200, 575);
+  text("machine", 200, 575);
 
   //shotgun
-  if (threekey==true) {
+  if (sniper==true) {
     fill(green);
   } else {
     fill(yellow);
   }
   rect(300, 575, 50, 50);
   fill(blue);
-  text("shotgun", 300, 575);
-}
-
-void upgradeshop(){
-  upgradeshopbutton.show();
-    if (upgradeshopbutton.clicked) {
-mode=pause;
-  }
+  text("sniper", 300, 575);
 }

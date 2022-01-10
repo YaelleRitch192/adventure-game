@@ -10,11 +10,11 @@ class darknesscell {
   }
 
   void show() {
-    fill(0,opacity);
+    fill(0, opacity);
     rectMode(CORNER);
-   float d =  dist(myhero.location.x, myhero.location.y,x,y);
-    opacity=map(d, 0, 300+extralight, 0, 255);
-      square(x, y, size);
+    float d =  dist(myhero.location.x, myhero.location.y, x, y);
+    opacity=map(d, 0, 200+extralight, 0, 255);
+    square(x, y, size);
   }
 
   void act() {

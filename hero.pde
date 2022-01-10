@@ -7,6 +7,7 @@ class hero extends gameobject {
   weapon myweapon;
   hero() {
     super();
+        location = new PVector (150, 150);
     hp= 50;
     maxhp=100;
     speed=5;
@@ -26,13 +27,12 @@ class hero extends gameobject {
     fill(white);
     textSize(15);
     text(hp, location.x, location.y-40);
-    currentaction.show(location.x,location.y,size/1.5,size);
-    //////////////////////////////////////////////////////////////could add health bar
-    
+    imageMode(CENTER);
+    currentaction.show(location.x, location.y, size/1.5, size);
   }
   void act() {
     super.act();
-if(hp>maxhp)hp=maxhp;
+    if (hp>maxhp)hp=maxhp;
     if (wkey) velocity.y = -speed;
     if (akey) velocity.x = -speed;
     if (skey) velocity.y = speed;
@@ -42,20 +42,19 @@ if(hp>maxhp)hp=maxhp;
     if (!akey && !dkey) velocity.x=0;
 
 
-if (abs(velocity.y)>abs(velocity.x)){
- if (velocity.y>=0) currentaction=mandown;
- else currentaction=manup;
-}else{
-  if (velocity.x>0) currentaction=manright;
-  else currentaction=manleft;
-}
-if (velocity.y==0 && velocity.x==0) currentaction=mandown;
- 
+    if (abs(velocity.y)>abs(velocity.x)) {
+      if (velocity.y>=0) currentaction=mandown;
+      else currentaction=manup;
+    } else {
+      if (velocity.x>0) currentaction=manright;
+      else currentaction=manleft;
+    }
+    if (velocity.y==0 && velocity.x==0) currentaction=mandown;
+
     if (northroom !=#FFFFFF && location.y == height*0.1 && location.x>= width/2-50 && location.x <= width/2+50) {
       roomy--;
       location = new PVector(width/2, height*0.9-10);
     }
-
     if (eastroom !=#FFFFFF && location.x == width*0.9 && location.y>= height/2-50 && location.y <= height/2+50) {
       roomx++;
       location = new PVector(width*0.1+10, height/2);
@@ -70,16 +69,8 @@ if (velocity.y==0 && velocity.x==0) currentaction=mandown;
     }
 
 
-    // mymachinegun.update();
-    //   mysniper.update();
-    //        myshotgun.update();
     myweapon.update();
-    // if (onekey) mymachinegun.shoot();
     if (space)myweapon.shoot();
-    //    mysniper.update();
-   // if (twokey) mysniper.shoot();
-    //myshotgun.update();
-    //if (threekey) myshotgun.shoot();
 
 
 
@@ -92,13 +83,13 @@ if (velocity.y==0 && velocity.x==0) currentaction=mandown;
       }
       if (obj instanceof droppedgun && iscollidingwith(obj)) {
         droppedgun gun = (droppedgun) obj;
-          myweapon=gun.w;  
-          gun.hp=0;
+        myweapon=gun.w;  
+        gun.hp=0;
       }
       if (obj instanceof droppedhealth && iscollidingwith(obj)) {
         droppedhealth health = (droppedhealth) obj;
-          hp=hp+10;
-          health.hp=0;
+        hp=hp+10;
+        health.hp=0;
       }
 
       if (healthtimer>healththreshold) {
@@ -111,7 +102,8 @@ if (velocity.y==0 && velocity.x==0) currentaction=mandown;
       }
       i++;
     }
-
-
+    if (hp==0) {
+      mode=gameover;
+    }
   }
 }

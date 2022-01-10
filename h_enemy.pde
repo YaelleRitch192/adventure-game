@@ -1,6 +1,6 @@
 class enemy extends gameobject {
 
-
+gif currentaction;
   enemy() {
     roomx=1;
     roomy=1;
@@ -11,12 +11,13 @@ class enemy extends gameobject {
   }
 
   enemy(int x, int y) {
+    currentaction=slimezero;
     roomx=x;
     roomy=y;
-    location=new PVector(width/2-100, height/2-100);
+    location=new PVector(random(200,600), random(200,400));
     velocity= new PVector(0, 0);
     hp=100;
-    size=30;
+    size=80;
   }
 
   enemy(int hp_, int s, int x, int y) {
@@ -30,9 +31,9 @@ class enemy extends gameobject {
   void show() {
     textSize(10);
     fill(brown);
-    ellipse(location.x, location.y, size, size);
+    currentaction.show(location.x,location.y,size/1.5,size);
     fill(white);
-    text(hp, location.x, location.y);
+    text(hp, location.x, location.y-30);
   }
 
   void act() {

@@ -14,7 +14,7 @@ class grower extends enemy {
   void act() {
     super.act();
     if (size<500) {
-      size++;
+      size=size+2;
       if (size==500) {
         size=0;
       }

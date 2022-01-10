@@ -2,7 +2,7 @@ class enemybullet extends gameobject {
 
   int timer;
   color bulletcolour;
-
+int rx,ry;
 
 
   enemybullet(PVector aimvector, float x, float y, int colour, int s) {    
@@ -15,8 +15,8 @@ class enemybullet extends gameobject {
     timer=100;
     hp=1;
     s=10;
-    roomx=3;
-    roomy=1;
+    roomx=myhero.roomx;
+    roomy=myhero.roomy;
   }
 
   void show() {

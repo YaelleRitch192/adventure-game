@@ -35,7 +35,7 @@ class Button {
     } else {
       fill(highlight);
     }
-    textSize(w/4);
+    textSize(25);
     text(text, x, y);
 
     if (mouseReleased && mouseX > x-w/2 && mouseX < x+w/2 && mouseY > y-h/2 && mouseY < y+h/2) {

@@ -1,7 +1,5 @@
 
-//shooter doesnt work
-//make pause screen come on when u walk thru the shop door
-
+import processing.pdf.*;
 
 boolean mouseReleased;
 boolean hadPressed;
@@ -20,9 +18,12 @@ color yellow = #BF9F41;
 color black  = #000000;
 color white  = #FFFFFF;
 color red = #FF0303;
+color purple = #9F66C4;
+color cyan = #41BFB4;
 
 
 int mode;
+final int instructions = 5;
 final int intro =1;
 final int game =2;
 final int pause =3;
@@ -38,18 +39,27 @@ gif zombieup;
 gif zombiedown;
 gif zombieleft;
 gif zombieright;
+gif slimezero;
+gif slimeone;
+gif slimetwo;
+gif slimethree;
+gif slimefour;
+
 //pics
 PImage healthpotion;
 PImage droppedgun;
 PImage sprite;
 PImage shop;
+PImage winportal;
 //buttons
 Button startbutton;
+Button restartbutton;
 Button hpbutton;
 Button speedbutton;
 Button damagebutton;
 Button upgradeshopbutton;
 Button extralightbutton;
+Button instructionsbutton;
 //map
 PImage map;
 color northroom, eastroom, southroom, westroom;
@@ -82,6 +92,13 @@ final int grower_size=50;
 final int ammo=0;
 final int health=1;
 final int gun = 2;
+boolean shotgun;
+boolean machinegun;
+boolean sniper;
+boolean shotgununlocked;
+boolean machinegununlocked;
+boolean sniperunlocked;
+
 
 
 
@@ -101,23 +118,27 @@ void setup() {
   droppedgun=loadImage("gun.png");
   sprite=loadImage("sprite.png");
   shop=loadImage("shop.png");
+  winportal=loadImage("winportal.png");
   //gifs
   forest=new gif(28, 10, "frame_", "_delay-0.03s.gif");
-  manup = new gif(4,10, "man/up/sprite_", ".png");
-  mandown = new gif(4,10, "man/down/sprite_", ".png");
-  manleft= new gif(4,10, "man/left/sprite_", ".png");
-  manright = new gif(4,10, "man/right/sprite_", ".png");
-  zombieup = new gif(4,10, "zombie/up/Zombie_0", ".png");
-  zombiedown = new gif(4,10, "zombie/down/Zombie_0", ".png");
-  zombieleft= new gif(4,10, "zombie/left/Zombie_0", ".png");
-  zombieright = new gif(4,10, "zombie/right/Zombie_0", ".png");
+  manup = new gif(4, 10, "man/up/sprite_", ".png");
+  mandown = new gif(4, 10, "man/down/sprite_", ".png");
+  manleft= new gif(4, 10, "man/left/sprite_", ".png");
+  manright = new gif(4, 10, "man/right/sprite_", ".png");
+  zombieup = new gif(4, 10, "zombie/up/Zombie_0", ".png");
+  zombiedown = new gif(4, 10, "zombie/down/Zombie_0", ".png");
+  zombieleft= new gif(4, 10, "zombie/left/Zombie_0", ".png");
+  zombieright = new gif(4, 10, "zombie/right/Zombie_0", ".png");
+  slimezero = new gif(5, 10, "Slime/Slime_", ".png");
   //buttons
-  startbutton  = new Button("Start", width/2, 400, 200, 150, green, darkgreen);
+  instructionsbutton  = new Button("instructions", 500, 350, 300, 150, green, darkgreen);
+  startbutton  = new Button("Start", 150, 350, 200, 150, green, darkgreen);
+  restartbutton  = new Button("Restart", width/2, 400, 200, 150, green, darkgreen);
   hpbutton = new   Button("*", 200, 250, 30, 30, blue, yellow);
   speedbutton = new   Button("*", 200, 350, 30, 30, blue, yellow);
   damagebutton = new   Button("*", 200, 450, 30, 30, blue, yellow);
-  upgradeshopbutton =   new Button("shop", width/4, height/2, 50, 30, blue, yellow);
-  extralightbutton = new Button("*",200,550, 30,30,blue,yellow);
+  upgradeshopbutton =   new Button("Exit", 600, 160, 60, 30, blue, yellow);
+  extralightbutton = new Button("*", 200, 550, 30, 30, blue, yellow);
   //images
   map=loadImage("map.png");
   //
@@ -145,19 +166,30 @@ void setup() {
     color roomcolour = map.get(x, y);
     if (roomcolour == green) {
       myobjects.add(new enemy(x, y));
+      myobjects.add(new enemy(x, y));
+      myobjects.add(new enemy(x, y));
     }
     if (roomcolour==blue) {
       myobjects.add(new follower(x, y));
     }
-        if (roomcolour==red) {
+    if (roomcolour==purple) {
+      myobjects.add(new shooter(x, y));
       myobjects.add(new shooter(x, y));
     }
-        if (roomcolour==yellow) {
+    if (roomcolour==yellow) {
       myobjects.add(new grower(x, y));
     }
     if (roomcolour==black) {
-myobjects.add(new upgradeshop(x,y));
- }
+      myobjects.add(new upgradeshop(x, y));
+    }
+    if (roomcolour==cyan) {
+      myobjects.add(new winportal(x, y));
+    }
+    if (roomcolour==red) {
+      myobjects.add(new shooter(x, y));
+      myobjects.add(new shooter(x, y));
+      myobjects.add(new follower(x, y));
+    }
     x++;
     if (x==map.width) {
       x=0;
@@ -182,6 +214,8 @@ void draw() {
     pause();
   } else if (mode==gameover) {
     gameover();
+  } else if (mode==instructions) {
+    instructions();
   }
 }
 void keyPressed() { 

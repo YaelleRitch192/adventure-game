@@ -12,7 +12,6 @@ class bullet extends gameobject {
     timer=40;
     hp=1;
     s=10;
-    velocity.add(myhero.velocity);
     roomx=myhero.roomx;
     roomy=myhero.roomy;
   }

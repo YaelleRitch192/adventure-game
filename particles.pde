@@ -5,7 +5,6 @@ class particles extends gameobject {
 
 
   particles(float x, float y, int rx, int ry) {
-    //////////////////////////////////////need a roomx and roomy
     hp=1;
     size=5;
     t=255;

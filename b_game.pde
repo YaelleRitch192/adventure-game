@@ -115,6 +115,7 @@ void drawminimap() {
 void guns() {
   rectMode(CENTER);
   textSize(10);
+  
   //machine
   if (shotgun==true) {
     fill(green);

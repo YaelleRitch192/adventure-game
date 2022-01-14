@@ -1,7 +1,9 @@
 void intro() {
   textFont(introfont);
   imageMode(CENTER);
-  
+       shotgun=false;
+      machinegun=false;
+      sniper=false;
   xp=0;
   extradamage=0;
   shotgun=true;

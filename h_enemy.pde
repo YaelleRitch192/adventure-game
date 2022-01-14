@@ -16,7 +16,7 @@ gif currentaction;
     roomy=y;
     location=new PVector(random(200,600), random(200,400));
     velocity= new PVector(0, 0);
-    hp=100;
+    hp=40;
     size=80;
   }
 

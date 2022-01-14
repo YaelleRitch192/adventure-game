@@ -7,8 +7,10 @@ class droppedgun extends droppeditem {
     int r=int(random(0, 3));
     if (r==0) {
       w= new shotgun();
-   //   shotgun=true;
-      shotgununlocked=true;
+      shotgun=true;
+      machinegun=false;
+      sniper=false;
+    //  shotgununlocked=true;
     }
     if (r==1) {
       w= new  machinegun();
@@ -22,7 +24,7 @@ class droppedgun extends droppeditem {
       shotgun=false;
       machinegun=false;
       sniper=true;
-      sniperunlocked=true;
+   //   sniperunlocked=true;
     }
     location = new PVector (x, y);
     size = 20;

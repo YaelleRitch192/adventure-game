@@ -73,7 +73,6 @@ class hero extends gameobject {
     if (space)myweapon.shoot();
 
 
-
     int i =0;
     while (i<myobjects.size()) {
       gameobject obj=myobjects.get(i);
